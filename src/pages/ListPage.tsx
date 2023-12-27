@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import CategoryRadio from "../components/CategoryRadio";
 
 const dataList = [
@@ -132,9 +133,9 @@ const dataList = [
 const ListPage = () => {
   return (
     <div className="overflow-auto">
-      <div className="mx-auto max-w-[1000px] w-full mt-28">
+      <div className="mx-auto max-w-[1000px] w-full my-28">
         <p className="text-[40px] font-semibold">
-          <span className="text-[#2D9AFF]">마음의 소리</span> 모아보기
+          <span className="text-[#2D9AFF]">마음의 편지</span> 모아보기
         </p>
         <p className="text-[20px] font-semibold mt-3">
           필요한 카테고리를 선택해서 볼 수 있어요
@@ -150,8 +151,9 @@ const ListPage = () => {
 
         <div className="grid grid-cols-3 gap-x-2 gap-y-8 mt-[34px]">
           {dataList.map((item) => (
-            <div
+            <Link
               key={item.id}
+              to={`/${item.id}`}
               className="bg-white border-solid border-[#EAEAEA] border-[1.5px] rounded-[15px]
                 py-[30px] px-8 flex flex-col justify-between h-[280px] cursor-pointer"
             >
@@ -164,7 +166,7 @@ const ListPage = () => {
               <p className="text-[#2D9AFF] text-base font-semibold">
                 {item.category}
               </p>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

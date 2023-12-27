@@ -20,7 +20,7 @@ const PostPage = () => {
     overlay.open(({ close, isOpen }) => (
       <SuccessModal
         isOpen={isOpen}
-        title={`마음의 소리가\n전송이 되었어요!`}
+        title={`마음의 편지가\n전송이 되었어요!`}
         close={close}
       />
     ));
@@ -30,7 +30,7 @@ const PostPage = () => {
     <div className="overflow-auto">
       <div className="mx-auto max-w-[1000px] w-full mt-28">
         <p className="text-[40px] font-semibold">
-          <span className="text-[#2D9AFF]">마음의 소리</span>를 확인해주세요.
+          <span className="text-[#2D9AFF]">마음의 편지</span>를 확인해주세요.
         </p>
         <p className="text-[20px] font-semibold mt-3">
           자유롭게 작성하되, 타인에 대한 욕설 비방은 자제해 주세요.
@@ -71,7 +71,7 @@ const PostPage = () => {
           <textarea
             ref={textareaRef}
             className="mt-8 resize-none text-[20px] font-semibold placeholder:text-[#CCCCCC] w-full h-full min-h-96"
-            placeholder="마음의 소리를 작성하세요."
+            placeholder="마음의 편지를 작성하세요."
             onChange={handleResizeHeight}
           />
         </div>

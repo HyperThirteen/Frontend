@@ -5,12 +5,17 @@ import ListPage from "./pages/ListPage";
 import LoginPage from "./pages/LoginPage";
 import PostPage from "./pages/PostPage";
 
+const ROLE = {
+  STUDENT: "STUDENT",
+  PRINCIPAL: "PRINCIPAL",
+};
+
 function App() {
   const navigate = useNavigate();
   // const { data, isLoading } = useAuthQuery();
 
   const [data] = useState({
-    role: "STUDENT",
+    role: ROLE.PRINCIPAL,
   });
   const [isLoading] = useState(false);
 
@@ -25,9 +30,9 @@ function App() {
   ) : (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
-      {data.role === "STUDENT" ? (
+      {data.role === ROLE.STUDENT ? (
         <Route path="/" element={<PostPage />} />
-      ) : data.role === "PRINCIPAL" ? (
+      ) : data.role === ROLE.PRINCIPAL ? (
         <>
           <Route path="/" element={<ListPage />} />
           <Route path="/:id" element={<DetailPage />} />

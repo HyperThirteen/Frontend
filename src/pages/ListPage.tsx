@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import CategoryRadio from "../components/CategoryRadio";
+import { Category } from "../types/category";
 
 const dataList = [
   {
@@ -131,6 +133,12 @@ const dataList = [
 ];
 
 const ListPage = () => {
+  const [category, setCategory] = useState<Category>("전체보기");
+
+  const categoryFilteredList = dataList.filter(
+    (item) => category === "전체보기" || item.category === category
+  );
+
   return (
     <div className="overflow-auto">
       <div className="mx-auto max-w-[1000px] w-full my-28">
@@ -141,16 +149,23 @@ const ListPage = () => {
           필요한 카테고리를 선택해서 볼 수 있어요
         </p>
         <div className="flex gap-6 mt-8">
-          <CategoryRadio label="전체보기" />
-          <CategoryRadio label="건의" />
-          <CategoryRadio label="학교폭력" />
-          <CategoryRadio label="질문" />
+          <CategoryRadio
+            label="전체보기"
+            onChange={() => setCategory("전체보기")}
+            defaultChecked
+          />
+          <CategoryRadio label="건의" onChange={() => setCategory("건의")} />
+          <CategoryRadio
+            label="학교폭력"
+            onChange={() => setCategory("학교폭력")}
+          />
+          <CategoryRadio label="질문" onChange={() => setCategory("질문")} />
         </div>
 
         <hr className="bg-[#F6F6F6] h-[1px] border-0 mt-[32px]" />
 
         <div className="grid grid-cols-3 gap-x-2 gap-y-8 mt-[34px]">
-          {dataList.map((item) => (
+          {categoryFilteredList.map((item) => (
             <Link
               key={item.id}
               to={`/${item.id}`}

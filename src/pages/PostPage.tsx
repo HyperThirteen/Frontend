@@ -1,18 +1,20 @@
 import { useOverlay } from "@toss/use-overlay";
-import { useRef } from "react";
+import {
+  ChangeEventHandler,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { toast } from "react-toastify";
 import CategoryRadio from "../components/CategoryRadio";
 import SuccessModal from "../components/SuccessModal";
 
 const PostPage = () => {
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  const handleResizeHeight = () => {
-    const textarea = textareaRef.current;
-    if (!textarea) return;
-
-    textarea.style.height = "auto";
-    textarea.style.height = textarea.scrollHeight + "px";
-  };
+  const [title, setTitle] = useState(localStorage.getItem("title") || "");
+  const [contents, setContents] = useState(
+    localStorage.getItem("contents") || ""
+  );
 
   const overlay = useOverlay();
 
@@ -25,6 +27,52 @@ const PostPage = () => {
       />
     ));
   };
+
+  const handleSave = useCallback(() => {
+    localStorage.setItem("title", title);
+    localStorage.setItem("contents", contents);
+    toast.success("편지를 저장했습니다!", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  }, [title, contents]);
+
+  const onChangeTitle: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const handleResizeHeight = () => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    textarea.style.height = "auto";
+    textarea.style.height = textarea.scrollHeight + "px";
+  };
+
+  const onChangeContents: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
+    setContents(e.target.value);
+    handleResizeHeight();
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "s") {
+        handleSave();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleSave]);
 
   return (
     <div className="overflow-auto">
@@ -56,7 +104,10 @@ const PostPage = () => {
               >
                 전송하기
               </button>
-              <button className="text-[#515151] text-[24px] font-semibold">
+              <button
+                className="text-[#515151] text-[24px] font-semibold"
+                onClick={handleSave}
+              >
                 임시저장
               </button>
             </div>
@@ -67,12 +118,15 @@ const PostPage = () => {
           <input
             className="mt-[34px] text-[28px] font-semibold placeholder:text-[#CCCCCC] w-full"
             placeholder="제목"
+            value={title}
+            onChange={onChangeTitle}
           />
           <textarea
             ref={textareaRef}
             className="mt-8 resize-none text-[20px] font-semibold placeholder:text-[#CCCCCC] w-full h-full min-h-96"
             placeholder="마음의 편지를 작성하세요."
-            onChange={handleResizeHeight}
+            value={contents}
+            onChange={onChangeContents}
           />
         </div>
       </div>

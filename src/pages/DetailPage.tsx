@@ -1,22 +1,11 @@
-import { useRef } from "react";
 import CategoryRadio from "../components/CategoryRadio";
 
-const PostPage = () => {
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  const handleResizeHeight = () => {
-    const textarea = textareaRef.current;
-    if (!textarea) return;
-
-    textarea.style.height = "auto";
-    textarea.style.height = textarea.scrollHeight + "px";
-  };
-
+const DetailPage = () => {
   return (
     <div className="overflow-auto">
       <div className="mx-auto max-w-[1000px] w-full mt-28">
         <p className="text-[40px] font-semibold">
-          <span className="text-[#2D9AFF]">마음의 소리</span>를 확인해주세요.
+          <span className="text-[#2D9AFF]">마음의 소리</span>를 작성해주세요.
         </p>
         <p className="text-[20px] font-semibold mt-3">
           자유롭게 작성하되, 타인에 대한 욕설 비방은 자제해 주세요.
@@ -36,31 +25,26 @@ const PostPage = () => {
               </div>
             </div>
             <div className="flex gap-[30px]">
-              <button className="text-[#2D9AFF] border-solid border-[1px] rounded-[10px] px-[18px] py-[10px] text-[24px] font-semibold">
-                전송하기
-              </button>
-              <button className="text-[#515151] text-[24px] font-semibold">
-                임시저장
+              <button className="text-[#FF2D60] border-solid border-[1px] rounded-[10px] px-[18px] py-[10px] text-[24px] font-semibold">
+                신고하기
               </button>
             </div>
           </div>
 
           <hr className="bg-[#EAEAEA] h-[1px] border-0 mt-[26px]" />
 
-          <input
-            className="mt-[34px] text-[28px] font-semibold placeholder:text-[#CCCCCC] w-full"
-            placeholder="제목"
-          />
-          <textarea
-            ref={textareaRef}
-            className="mt-8 resize-none text-[20px] font-semibold placeholder:text-[#CCCCCC] w-full h-full min-h-96"
-            placeholder="마음의 소리를 작성하세요."
-            onChange={handleResizeHeight}
-          />
+          <p className="mt-[34px] text-[28px] font-semibold">
+            아침운동, 원하는 사람들만으로 운영되었으면 합니다.
+          </p>
+
+          <p className="mt-8 resize-none text-[20px] font-semibold placeholder:text-[#CCCCCC] h-full min-h-96">
+            아침운동으로 스트레스를 받는 친구들이 많습니다. 또한 아침운동이
+            없이도 블라블라블라라
+          </p>
         </div>
       </div>
     </div>
   );
 };
 
-export default PostPage;
+export default DetailPage;

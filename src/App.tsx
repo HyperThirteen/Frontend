@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import DetailPage from "./pages/DetailPage";
 import ListPage from "./pages/ListPage";
 import LoginPage from "./pages/LoginPage";
 import PostPage from "./pages/PostPage";
@@ -27,7 +28,10 @@ function App() {
       {data.role === "STUDENT" ? (
         <Route path="/" element={<PostPage />} />
       ) : data.role === "PRINCIPAL" ? (
-        <Route path="/" element={<ListPage />} />
+        <>
+          <Route path="/" element={<ListPage />} />
+          <Route path="/:id" element={<DetailPage />} />
+        </>
       ) : null}
     </Routes>
   );

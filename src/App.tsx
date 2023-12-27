@@ -9,7 +9,7 @@ function App() {
   // const { data, isLoading } = useAuthQuery();
 
   const [data] = useState({
-    role: "STUDENT",
+    role: "PRINCIPAL",
   });
   const [isLoading] = useState(false);
 
@@ -26,9 +26,9 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
       {data.role === "STUDENT" ? (
         <Route path="/" element={<PostPage />} />
-      ) : (
+      ) : data.role === "PRINCIPAL" ? (
         <Route path="/" element={<ListPage />} />
-      )}
+      ) : null}
     </Routes>
   );
 }

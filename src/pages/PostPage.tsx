@@ -45,7 +45,7 @@ const PostPage = () => {
             </div>
           </div>
 
-          <hr className="bg-[#EAEAEA] mt-[26px]" />
+          <hr className="bg-[#EAEAEA] h-[1px] border-0 mt-[26px]" />
 
           <input
             className="mt-[34px] text-[28px] font-semibold placeholder:text-[#CCCCCC] w-full"

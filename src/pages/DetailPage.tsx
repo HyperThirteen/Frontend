@@ -1,6 +1,20 @@
+import { useOverlay } from "@toss/use-overlay";
 import CategoryRadio from "../components/CategoryRadio";
+import SuccessModal from "../components/SuccessModal";
 
 const DetailPage = () => {
+  const overlay = useOverlay();
+
+  const handleClickReport = () => {
+    overlay.open(({ close, isOpen }) => (
+      <SuccessModal
+        isOpen={isOpen}
+        title={` 부적절한 글이\n신고되었어요!`}
+        close={close}
+      />
+    ));
+  };
+
   return (
     <div className="overflow-auto">
       <div className="mx-auto max-w-[1000px] w-full mt-28">
@@ -25,7 +39,10 @@ const DetailPage = () => {
               </div>
             </div>
             <div className="flex gap-[30px]">
-              <button className="text-[#FF2D60] border-solid border-[1px] rounded-[10px] px-[18px] py-[10px] text-[24px] font-semibold">
+              <button
+                className="text-[#FF2D60] border-solid border-[1px] rounded-[10px] px-[18px] py-[10px] text-[24px] font-semibold"
+                onClick={handleClickReport}
+              >
                 신고하기
               </button>
             </div>

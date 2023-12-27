@@ -1,5 +1,7 @@
+import { useOverlay } from "@toss/use-overlay";
 import { useRef } from "react";
 import CategoryRadio from "../components/CategoryRadio";
+import SuccessModal from "../components/SuccessModal";
 
 const PostPage = () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -10,6 +12,18 @@ const PostPage = () => {
 
     textarea.style.height = "auto";
     textarea.style.height = textarea.scrollHeight + "px";
+  };
+
+  const overlay = useOverlay();
+
+  const onClickSendButton = () => {
+    overlay.open(({ close, isOpen }) => (
+      <SuccessModal
+        isOpen={isOpen}
+        title={`마음의 소리가\n전송이 되었어요!`}
+        close={close}
+      />
+    ));
   };
 
   return (
@@ -36,7 +50,10 @@ const PostPage = () => {
               </div>
             </div>
             <div className="flex gap-[30px]">
-              <button className="text-[#2D9AFF] border-solid border-[1px] rounded-[10px] px-[18px] py-[10px] text-[24px] font-semibold">
+              <button
+                className="text-[#2D9AFF] border-solid border-[1px] rounded-[10px] px-[18px] py-[10px] text-[24px] font-semibold"
+                onClick={onClickSendButton}
+              >
                 전송하기
               </button>
               <button className="text-[#515151] text-[24px] font-semibold">

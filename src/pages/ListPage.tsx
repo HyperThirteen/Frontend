@@ -152,14 +152,23 @@ const ListPage = () => {
           <CategoryRadio
             label="전체보기"
             onChange={() => setCategory("전체보기")}
-            defaultChecked
+            checked={category === "전체보기"}
           />
-          <CategoryRadio label="건의" onChange={() => setCategory("건의")} />
+          <CategoryRadio
+            label="건의"
+            onChange={() => setCategory("건의")}
+            checked={category === "건의"}
+          />
           <CategoryRadio
             label="학교폭력"
             onChange={() => setCategory("학교폭력")}
+            checked={category === "학교폭력"}
           />
-          <CategoryRadio label="질문" onChange={() => setCategory("질문")} />
+          <CategoryRadio
+            label="질문"
+            onChange={() => setCategory("질문")}
+            checked={category === "질문"}
+          />
         </div>
 
         <hr className="bg-[#F6F6F6] h-[1px] border-0 mt-[32px]" />

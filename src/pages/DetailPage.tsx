@@ -1,5 +1,4 @@
 import { useOverlay } from "@toss/use-overlay";
-import CategoryRadio from "../components/CategoryRadio";
 import SuccessModal from "../components/SuccessModal";
 
 const DetailPage = () => {
@@ -33,9 +32,7 @@ const DetailPage = () => {
                 선택해 주세요
               </p>
               <div className="flex gap-6">
-                <CategoryRadio label="건의" />
-                <CategoryRadio label="학교폭력" />
-                <CategoryRadio label="질문" />
+                <p className="text-[#2D9AFF] text-base font-semibold">건의</p>
               </div>
             </div>
             <div className="flex gap-[30px]">

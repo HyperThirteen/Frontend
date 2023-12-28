@@ -9,8 +9,11 @@ import {
 import { toast } from "react-toastify";
 import CategoryRadio from "../components/CategoryRadio";
 import SuccessModal from "../components/SuccessModal";
+import { Category } from "../types/category";
 
 const PostPage = () => {
+  const [category, setCategory] =
+    useState<Exclude<Category, "전체보기">>("건의");
   const [title, setTitle] = useState(localStorage.getItem("title") || "");
   const [contents, setContents] = useState(
     localStorage.getItem("contents") || ""
@@ -92,9 +95,21 @@ const PostPage = () => {
                 선택해 주세요
               </p>
               <div className="flex gap-6">
-                <CategoryRadio label="건의" />
-                <CategoryRadio label="학교폭력" />
-                <CategoryRadio label="질문" />
+                <CategoryRadio
+                  label="건의"
+                  checked={category === "건의"}
+                  onChange={() => setCategory("건의")}
+                />
+                <CategoryRadio
+                  label="학교폭력"
+                  checked={category === "학교폭력"}
+                  onChange={() => setCategory("학교폭력")}
+                />
+                <CategoryRadio
+                  label="질문"
+                  checked={category === "질문"}
+                  onChange={() => setCategory("질문")}
+                />
               </div>
             </div>
             <div className="flex gap-[30px]">

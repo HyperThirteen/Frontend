@@ -1,50 +1,46 @@
-import { useMutation } from "@tanstack/react-query";
-import { useOverlay } from "@toss/use-overlay";
-import {
-  ChangeEventHandler,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { axiosInstance } from "../apis/instance";
 import CategoryRadio from "../components/CategoryRadio";
-import SuccessModal from "../components/SuccessModal";
+import useClickCtrlS from "../hooks/useClickCtrlS";
+import useInput from "../hooks/useInput";
+import usePostLetterMutation from "../services/letter/mutations";
 import { Category } from "../types/category";
+
+const categoryMap = {
+  건의: "1",
+  학교폭력: "2",
+  질문: "3",
+} as const;
 
 const PostPage = () => {
   const [category, setCategory] =
     useState<Exclude<Category, "전체보기">>("건의");
-  const [title, setTitle] = useState(localStorage.getItem("title") || "");
-  const [contents, setContents] = useState(
-    localStorage.getItem("contents") || ""
+
+  const [title, onChangeTitle] = useInput(localStorage.getItem("title") || "");
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const handleResizeHeight = () => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    textarea.style.height = "auto";
+    textarea.style.height = textarea.scrollHeight + "px";
+  };
+
+  const [contents, onChangeContents] = useInput(
+    localStorage.getItem("contents") || "",
+    handleResizeHeight
   );
 
-  const overlay = useOverlay();
-
-  const { mutate: postLetterMutate } = useMutation({
-    mutationFn: async () => {
-      const { data } = await axiosInstance.post("/letter", {
-        s_id: 1,
-        c_id: 1,
-      });
-      console.log(data);
-      return data;
-    },
-    onSuccess() {
-      overlay.open(({ close, isOpen }) => (
-        <SuccessModal
-          isOpen={isOpen}
-          title={`마음의 편지가\n전송이 되었어요!`}
-          close={close}
-        />
-      ));
-    },
-  });
+  const { mutate: postLetterMutate } = usePostLetterMutation();
 
   const onClickSendButton = () => {
-    postLetterMutate();
+    postLetterMutate({
+      s_id: "1",
+      title,
+      content: contents,
+      c_id: categoryMap[category],
+    });
   };
 
   const handleSave = useCallback(() => {
@@ -62,36 +58,7 @@ const PostPage = () => {
     });
   }, [title, contents]);
 
-  const onChangeTitle: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setTitle(e.target.value);
-  };
-
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  const handleResizeHeight = () => {
-    const textarea = textareaRef.current;
-    if (!textarea) return;
-
-    textarea.style.height = "auto";
-    textarea.style.height = textarea.scrollHeight + "px";
-  };
-
-  const onChangeContents: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
-    setContents(e.target.value);
-    handleResizeHeight();
-  };
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === "s") {
-        handleSave();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handleSave]);
+  useClickCtrlS(handleSave);
 
   return (
     <div className="overflow-auto">

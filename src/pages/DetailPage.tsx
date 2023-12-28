@@ -1,5 +1,7 @@
 import { useOverlay } from "@toss/use-overlay";
+import { useParams } from "react-router-dom";
 import SuccessModal from "../components/SuccessModal";
+import useListQuery from "../services/letter/queries";
 
 const DetailPage = () => {
   const overlay = useOverlay();
@@ -13,6 +15,12 @@ const DetailPage = () => {
       />
     ));
   };
+
+  const { id } = useParams();
+
+  const { data: listData } = useListQuery();
+
+  const filteredItem = listData?.filter((item) => item.id === Number(id))[0];
 
   return (
     <div className="overflow-auto">
@@ -32,7 +40,9 @@ const DetailPage = () => {
                 선택해 주세요
               </p>
               <div className="flex gap-6">
-                <p className="text-[#2D9AFF] text-base font-semibold">건의</p>
+                <p className="text-[#2D9AFF] text-base font-semibold">
+                  {filteredItem?.Category.c_name}
+                </p>
               </div>
             </div>
             <div className="flex gap-[30px]">
@@ -48,12 +58,11 @@ const DetailPage = () => {
           <hr className="bg-[#EAEAEA] h-[1px] border-0 mt-[26px]" />
 
           <p className="mt-[34px] text-[28px] font-semibold">
-            아침운동, 원하는 사람들만으로 운영되었으면 합니다.
+            {filteredItem?.title}
           </p>
 
           <p className="mt-8 resize-none text-[20px] font-semibold placeholder:text-[#CCCCCC] h-full min-h-96">
-            아침운동으로 스트레스를 받는 친구들이 많습니다. 또한 아침운동이
-            없이도 블라블라블라라
+            {filteredItem?.content}
           </p>
         </div>
       </div>

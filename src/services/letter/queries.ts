@@ -17,7 +17,7 @@ type Letter = {
 
 export const useListQuery = () => {
   return useQuery({
-    queryKey: ["list123"],
+    queryKey: ["list"],
     queryFn: async () => {
       const { data } = await axiosInstance.get<Letter[]>("/letter");
       console.log("1");

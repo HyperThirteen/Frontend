@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import CategoryRadio from "../components/CategoryRadio";
-import useListQuery from "../services/list/queries";
+import useListQuery from "../services/letter/queries";
 import { Category } from "../types/category";
 
 const ListPage = () => {
   const [category, setCategory] = useState<Category>("전체보기");
 
-  const { data: dataList } = useListQuery();
+  const { data: listData } = useListQuery();
 
-  const categoryFilteredList = dataList?.filter(
+  const categoryFilteredList = listData?.filter(
     (item) => category === "전체보기" || item.Category.c_name === category
   );
 

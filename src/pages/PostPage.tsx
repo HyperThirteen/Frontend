@@ -1,3 +1,4 @@
+import { useMutation } from "@tanstack/react-query";
 import { useOverlay } from "@toss/use-overlay";
 import {
   ChangeEventHandler,
@@ -7,6 +8,7 @@ import {
   useState,
 } from "react";
 import { toast } from "react-toastify";
+import { axiosInstance } from "../apis/instance";
 import CategoryRadio from "../components/CategoryRadio";
 import SuccessModal from "../components/SuccessModal";
 import { Category } from "../types/category";
@@ -21,14 +23,28 @@ const PostPage = () => {
 
   const overlay = useOverlay();
 
+  const { mutate: postLetterMutate } = useMutation({
+    mutationFn: async () => {
+      const { data } = await axiosInstance.post("/letter", {
+        s_id: 1,
+        c_id: 1,
+      });
+      console.log(data);
+      return data;
+    },
+    onSuccess() {
+      overlay.open(({ close, isOpen }) => (
+        <SuccessModal
+          isOpen={isOpen}
+          title={`마음의 편지가\n전송이 되었어요!`}
+          close={close}
+        />
+      ));
+    },
+  });
+
   const onClickSendButton = () => {
-    overlay.open(({ close, isOpen }) => (
-      <SuccessModal
-        isOpen={isOpen}
-        title={`마음의 편지가\n전송이 되었어요!`}
-        close={close}
-      />
-    ));
+    postLetterMutate();
   };
 
   const handleSave = useCallback(() => {

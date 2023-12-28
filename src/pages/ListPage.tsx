@@ -1,142 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import CategoryRadio from "../components/CategoryRadio";
+import useListQuery from "../services/list/queries";
 import { Category } from "../types/category";
-
-const dataList = [
-  {
-    id: 1,
-    title: "화장실의 휴지가 자주 부족해요",
-    contents:
-      "화장실에 휴지가 없어서 자주 불편합니다. 제발!!! 자주 확인하고 배치해주세요...",
-    category: "건의",
-  },
-  {
-    id: 2,
-    title: "화장실의 휴지가 자주 부족해요",
-    contents:
-      "화장실에 휴지가 없어서 자주 불편합니다. 제발!!! 자주 확인하고 배치해주세요...",
-    category: "건의",
-  },
-  {
-    id: 3,
-    title: "화장실의 휴지가 자주 부족해요",
-    contents:
-      "화장실에 휴지가 없어서 자주 불편합니다. 제발!!! 자주 확인하고 배치해주세요...",
-    category: "건의",
-  },
-  {
-    id: 4,
-    title: "화장실의 휴지가 자주 부족해요",
-    contents:
-      "화장실에 휴지가 없어서 자주 불편합니다. 제발!!! 자주 확인하고 배치해주세요...",
-    category: "건의",
-  },
-  {
-    id: 5,
-    title: "화장실의 휴지가 자주 부족해요",
-    contents:
-      "화장실에 휴지가 없어서 자주 불편합니다. 제발!!! 자주 확인하고 배치해주세요...",
-    category: "건의",
-  },
-  {
-    id: 6,
-    title: "화장실의 휴지가 자주 부족해요",
-    contents:
-      "화장실에 휴지가 없어서 자주 불편합니다. 제발!!! 자주 확인하고 배치해주세요...",
-    category: "건의",
-  },
-  {
-    id: 7,
-    title: "화장실의 휴지가 자주 부족해요",
-    contents:
-      "화장실에 휴지가 없어서 자주 불편합니다. 제발!!! 자주 확인하고 배치해주세요...",
-    category: "건의",
-  },
-  {
-    id: 8,
-    title: "화장실의 휴지가 자주 부족해요",
-    contents:
-      "화장실에 휴지가 없어서 자주 불편합니다. 제발!!! 자주 확인하고 배치해주세요...",
-    category: "건의",
-  },
-  {
-    id: 9,
-    title: "화장실의 휴지가 자주 부족해요",
-    contents:
-      "화장실에 휴지가 없어서 자주 불편합니다. 제발!!! 자주 확인하고 배치해주세요...",
-    category: "건의",
-  },
-  {
-    id: 10,
-    title: "화장실의 휴지가 자주 부족해요0",
-    contents:
-      "화장실에 휴지가 없어서 자주 불편합니다. 제발!!! 자주 확인하고 배치해주세요...0",
-    category: "건의",
-  },
-  {
-    id: 11,
-    title: "화장실의 휴지가 자주 부족해요1",
-    contents:
-      "화장실에 휴지가 없어서 자주 불편합니다. 제발!!! 자주 확인하고 배치해주세요...1",
-    category: "건의",
-  },
-  {
-    id: 12,
-    title: "화장실의 휴지가 자주 부족해요2",
-    contents:
-      "화장실에 휴지가 없어서 자주 불편합니다. 제발!!! 자주 확인하고 배치해주세요...2",
-    category: "건의",
-  },
-  {
-    id: 13,
-    title: "화장실의 휴지가 자주 부족해요3",
-    contents:
-      "화장실에 휴지가 없어서 자주 불편합니다. 제발!!! 자주 확인하고 배치해주세요...3",
-    category: "건의",
-  },
-  {
-    id: 14,
-    title: "화장실의 휴지가 자주 부족해요4",
-    contents:
-      "화장실에 휴지가 없어서 자주 불편합니다. 제발!!! 자주 확인하고 배치해주세요...4",
-    category: "건의",
-  },
-  {
-    id: 15,
-    title: "화장실의 휴지가 자주 부족해요5",
-    contents:
-      "화장실에 휴지가 없어서 자주 불편합니다. 제발!!! 자주 확인하고 배치해주세요...5",
-    category: "건의",
-  },
-  {
-    id: 16,
-    title: "화장실의 휴지가 자주 부족해요6",
-    contents:
-      "화장실에 휴지가 없어서 자주 불편합니다. 제발!!! 자주 확인하고 배치해주세요...6",
-    category: "건의",
-  },
-  {
-    id: 17,
-    title: "화장실의 휴지가 자주 부족해요7",
-    contents:
-      "화장실에 휴지가 없어서 자주 불편합니다. 제발!!! 자주 확인하고 배치해주세요...7",
-    category: "건의",
-  },
-  {
-    id: 18,
-    title: "화장실의 휴지가 자주 부족해요8",
-    contents:
-      "화장실에 휴지가 없어서 자주 불편합니다. 제발!!! 자주 확인하고 배치해주세요...7",
-    category: "건의",
-  },
-];
 
 const ListPage = () => {
   const [category, setCategory] = useState<Category>("전체보기");
 
-  const categoryFilteredList = dataList.filter(
-    (item) => category === "전체보기" || item.category === category
+  const { data: dataList } = useListQuery();
+
+  const categoryFilteredList = dataList?.filter(
+    (item) => category === "전체보기" || item.Category.c_name === category
   );
 
   return (
@@ -174,7 +48,7 @@ const ListPage = () => {
         <hr className="bg-[#F6F6F6] h-[1px] border-0 mt-[32px]" />
 
         <div className="grid grid-cols-3 gap-x-2 gap-y-8 mt-[34px]">
-          {categoryFilteredList.map((item) => (
+          {categoryFilteredList?.map((item) => (
             <Link
               key={item.id}
               to={`/${item.id}`}
@@ -183,12 +57,10 @@ const ListPage = () => {
             >
               <div>
                 <p className="text-[28px] font-semibold">{item.title}</p>
-                <p className="text-[20px] font-semibold mt-3">
-                  {item.contents}
-                </p>
+                <p className="text-[20px] font-semibold mt-3">{item.content}</p>
               </div>
               <p className="text-[#2D9AFF] text-base font-semibold">
-                {item.category}
+                {item.Category.c_name}
               </p>
             </Link>
           ))}

@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import CategoryRadio from "../components/CategoryRadio";
 import useClickCtrlS from "../hooks/useClickCtrlS";
 import useInput from "../hooks/useInput";
-import usePostLetterMutation from "../services/letter/mutations";
+import { usePostLetterMutation } from "../services/letter/mutations";
 import { Category } from "../types/category";
 
 const categoryMap = {

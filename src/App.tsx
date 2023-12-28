@@ -15,7 +15,7 @@ function App() {
   // const { data, isLoading } = useAuthQuery();
 
   const [data] = useState({
-    role: ROLE.STUDENT,
+    role: ROLE.PRINCIPAL,
   });
   const [isLoading] = useState(false);
 

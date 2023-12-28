@@ -1,22 +1,15 @@
-import { useOverlay } from "@toss/use-overlay";
 import { useParams } from "react-router-dom";
-import SuccessModal from "../components/SuccessModal";
-import useListQuery from "../services/letter/queries";
+import { useReportMutation } from "../services/letter/mutations";
+import { useListQuery } from "../services/letter/queries";
 
 const DetailPage = () => {
-  const overlay = useOverlay();
+  const { id } = useParams();
+
+  const { mutate: reportMutate } = useReportMutation();
 
   const handleClickReport = () => {
-    overlay.open(({ close, isOpen }) => (
-      <SuccessModal
-        isOpen={isOpen}
-        title={` 부적절한 글이\n신고되었어요!`}
-        close={close}
-      />
-    ));
+    id && reportMutate(id);
   };
-
-  const { id } = useParams();
 
   const { data: listData } = useListQuery();
 

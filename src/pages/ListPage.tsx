@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import CategoryRadio from "../components/CategoryRadio";
-import useListQuery from "../services/letter/queries";
+import { useListQuery } from "../services/letter/queries";
 import { Category } from "../types/category";
 
 const ListPage = () => {
@@ -57,7 +57,9 @@ const ListPage = () => {
             >
               <div>
                 <p className="text-[28px] font-semibold">{item.title}</p>
-                <p className="text-[20px] font-semibold mt-3">{item.content}</p>
+                <p className="text-[20px] font-semibold mt-3 max-h-[60px] text-ellipsis overflow-hidden break-all leading-normal">
+                  {item.content}
+                </p>
               </div>
               <p className="text-[#2D9AFF] text-base font-semibold">
                 {item.Category.c_name}
